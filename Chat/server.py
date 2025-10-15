@@ -2,11 +2,16 @@ from operator import add
 from this import d
 import socket, threading
 
-host = "127.0.0.1"
+
+
+host = "0.0.0.0"
 port = 55555
 server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 server.bind((host,port))
 server.listen()
+host_name = socket.gethostname()
+ip = socket.gethostbyname(host_name)
+print(f"Server IP: {ip}")
 
 clients = []
 nicknames = []
@@ -46,7 +51,7 @@ def receive():
         
         thread = threading.Thread(target=handle, args=(client,))
         thread.start()
-
-print("Server is listening.... ")
-receive()
+if __name__ == "__main__":
+    print("Server is listening.... ")
+    receive()
 
