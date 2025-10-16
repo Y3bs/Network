@@ -1,7 +1,7 @@
 from operator import add
 from this import d
 import socket, threading
-
+import os
 
 
 host = "0.0.0.0"
@@ -11,7 +11,7 @@ server.bind((host,port))
 server.listen()
 host_name = socket.gethostname()
 ip = socket.gethostbyname(host_name)
-print(f"Server IP: {ip}")
+
 
 clients = []
 nicknames = []
@@ -42,16 +42,18 @@ def receive():
 
         client.send("NICK".encode("ascii"))
         nickname = client.recv(1024).decode("ascii")
+        broadcast(f"{nickname} joined the chat".encode("ascii"))
         nicknames.append(nickname)
         clients.append(client)
 
         print(f"Client Nickname: {nickname}")
-        broadcast(f"{nickname} joined the chat".encode("ascii"))
-        client.send("Connected to the server".encode("ascii"))
+        client.send("Connected. You joined the chat".encode("ascii"))
         
         thread = threading.Thread(target=handle, args=(client,))
         thread.start()
 if __name__ == "__main__":
+    os.system('cls')
+    print(f"Server IP: {ip}")
     print("Server is listening.... ")
     receive()
 
