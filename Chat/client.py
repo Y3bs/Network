@@ -1,12 +1,12 @@
 from concurrent.futures import thread
 import socket, threading
-import os, asyncio, sys
+import os, sys
 
 os.system('cls')
+server_ip = input("Enter server ip: ")
 nickname = input("Enter your nickname: ")
 client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-client.connect(("127.0.0.1",55555))
-asyncio.sleep(5)
+client.connect((server_ip,55555))
 os.system('cls')
 
 def receive():
